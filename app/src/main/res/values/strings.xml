@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Zhupper</string>
+    <string name="request_trip_title">Solicitar Viagem</string>
+    <string name="trip_options_title">Opções de Viagem</string>
+    <string name="trip_history_title">Histórico de Viagem</string>
 </resources>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/fragment_request_trip">
+
+    <fragment
+        android:id="@+id/fragment_request_trip"
+        android:name="com.gmail.devpelegrino.zhupper.ui.trip.request.RequestTripFragment"
+        android:label="@string/request_trip_title"
+        tools:layout="@layout/fragment_request_trip">
+        <action
+            android:id="@+id/action_fragment_request_trip_to_fragment_trip_options"
+            app:destination="@id/fragment_trip_options" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_trip_options"
+        android:name="com.gmail.devpelegrino.zhupper.ui.trip.option.TripOptionFragment"
+        android:label="@string/trip_options_title"
+        tools:layout="@layout/fragment_trip_option">
+        <action
+            android:id="@+id/action_fragment_trip_options_to_fragment_trip_history"
+            app:destination="@id/fragment_trip_history" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_trip_history"
+        android:name="com.gmail.devpelegrino.zhupper.ui.trip.history.TripHistoryFragment"
+        android:label="@string/trip_history_title"
+        tools:layout="@layout/fragment_trip_history" />
+</navigation>
