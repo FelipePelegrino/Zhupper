@@ -3,6 +3,14 @@
 Este documento contém checklists para garantir que os requisitos da aplicação sejam atendidos em cada uma das telas descritas, bem como os comportamentos esperados.
 - API: https://xd5zl5kk2yltomvw5fb37y3bm40vsyrx.lambda-url.sa-east-1.on.aws
 
+### Origem:
+- Av. Pres. Kenedy, 2385 - Remédios, Osasco - SP, 02675-031
+- Av. Thomas Edison, 365 - Barra Funda, São Paulo - SP, 01140-000
+- Av. Brasil, 2033 - Jardim America, São Paulo - SP, 01431-001
+
+### Destino:
+- Av. Paulista, 1538 - Bela Vista, São Paulo - SP, 01310-200
+
 ---
 
 ## Geral

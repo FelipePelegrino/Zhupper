@@ -7,5 +7,5 @@
 - [ ] Clean Code / Architecture
 - [ ] Testes instrumentados
 - [ ] Splash
-- [ ] D.I
-- [ ] versionCatalog
+- [ x ] D.I
+- [ x ] versionCatalog
