@@ -24,8 +24,8 @@ class RequestTripViewModel(
     private var _sourceAddressTextState: String = ""
     val sourceAddressTextState: String get() = _sourceAddressTextState
 
-    private var _destinyAddressTextState: String = ""
-    val destinyAddressTextState: String get() = _destinyAddressTextState
+    private var _destinationAddressTextState: String = ""
+    val destinationAddressTextState: String get() = _destinationAddressTextState
 
     private val _uiState = MutableStateFlow<RequestTripUiState>(RequestTripUiState.Idle)
     val uiState: StateFlow<RequestTripUiState> get() = _uiState
@@ -42,8 +42,8 @@ class RequestTripViewModel(
         _sourceAddressTextState = text
     }
 
-    fun updateDestinyAddressTextState(text: String) {
-        _destinyAddressTextState = text
+    fun updateDestinationAddressTextState(text: String) {
+        _destinationAddressTextState = text
     }
 
     fun requestRideTest(

@@ -14,30 +14,30 @@ Este documento contém checklists para garantir que os requisitos da aplicação
 ---
 
 ## Geral
-- [ ] Solicitação de Viagem
+- [ x ] Solicitação de Viagem
 - [ ] Opções de Viagem
 - [ ] Histórico de Viagens
-- [ ] Debounce
-- [ ] Loading para cada Request | visual + texto ? 
-- [ ] Dialog de erro com botão tentar novamente
+- [ x ] Debounce
+- [ x ] Loading para cada Request | visual + texto ? 
+- [ x ] Dialog de erro com botão tentar novamente
 
 ---
 
 ## Solicitação de Viagem
 
-- [ ] O formulário contém os campos:
-  - [ ] ID do usuário.
-  - [ ] Endereço de origem.
-  - [ ] Endereço de destino.
-- [ ] Deve ter um botão para estimar o valor da viagem.
-  - [ ] Request API | POST /ride/estimate
-    - [ ] 200 - exibir tela opções de viagem
-	- [ ] 400 - invalid data
+- [ x ] O formulário contém os campos:
+  - [ x ] ID do usuário.
+  - [ x ] Endereço de origem.
+  - [ x ] Endereço de destino.
+- [ x ] Deve ter um botão para estimar o valor da viagem.
+  - [ x ] Request API | POST /ride/estimate
+    - [ x ] 200 - exibir tela opções de viagem
+	- [ x ] 400 - invalid data
 
 ---
 
 ## Opções de Viagem
-- [ ] Deve mostrar um mapa estático com a rota retornada naestimativa plotada, indicando o ponto A e o ponto B.
+- [ ] Deve mostrar um mapa estático com a rota retornada na estimativa plotada, indicando o ponto A e o ponto B.
 - [ ] A lista de opções apresenta para cada motorista:
   - [ ] Nome.
   - [ ] Descrição.

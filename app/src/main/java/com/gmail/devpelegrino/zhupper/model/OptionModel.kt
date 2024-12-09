@@ -1,5 +1,9 @@
 package com.gmail.devpelegrino.zhupper.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class OptionModel(
     val id: Int?,
     val name: String?,
@@ -7,4 +11,4 @@ data class OptionModel(
     val vehicle: String?,
     val review: ReviewModel?,
     val value: Number?
-)
+): Parcelable

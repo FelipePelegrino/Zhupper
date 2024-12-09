@@ -9,9 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.gmail.devpelegrino.zhupper.R
 import com.gmail.devpelegrino.zhupper.databinding.FragmentRequestTripBinding
+import com.gmail.devpelegrino.zhupper.ui.trip.option.TripOptionArg
+import com.gmail.devpelegrino.zhupper.ui.trip.option.TripOptionFragment.Companion.TRIP_OPTION_ARG
 import com.gmail.devpelegrino.zhupper.ui.utils.setGoneAnimated
 import com.gmail.devpelegrino.zhupper.ui.utils.setSafeOnClickListener
 import com.gmail.devpelegrino.zhupper.ui.utils.setVisibleAnimated
@@ -62,8 +64,8 @@ class RequestTripFragment : Fragment() {
         textInputSourceAddress.editText?.addTextChangedListener { text ->
             viewModel.updateSourceAddressTextState(text.toString())
         }
-        textInputDestinyAddress.editText?.addTextChangedListener { text ->
-            viewModel.updateDestinyAddressTextState(text.toString())
+        textInputDestinationAddress.editText?.addTextChangedListener { text ->
+            viewModel.updateDestinationAddressTextState(text.toString())
         }
     }
 
@@ -73,8 +75,23 @@ class RequestTripFragment : Fragment() {
                 viewModel.uiState.collect { uiState ->
                     when (uiState) {
                         is RequestTripViewModel.RequestTripUiState.Success -> {
-                            NavHostFragment.findNavController(this@RequestTripFragment)
-                                .navigate(R.id.action_fragment_request_trip_to_fragment_trip_option)
+                            val tripOptionArg = TripOptionArg(
+                                userId = viewModel.userIdTextState,
+                                sourceAddress = viewModel.sourceAddressTextState,
+                                destinationAddress = viewModel.destinationAddressTextState,
+                                sourceLocation = uiState.estimateRideModel.origin,
+                                destinationLocation = uiState.estimateRideModel.destination,
+                                options = uiState.estimateRideModel.options
+                            )
+
+                            val bundle = Bundle().apply {
+                                putParcelable(TRIP_OPTION_ARG, tripOptionArg)
+                            }
+
+                            findNavController().navigate(
+                                R.id.action_fragment_request_trip_to_fragment_trip_option,
+                                bundle
+                            )
                         }
 
                         is RequestTripViewModel.RequestTripUiState.ApiError -> {
@@ -124,13 +141,13 @@ class RequestTripFragment : Fragment() {
         viewModel.requestRideTest(
             customerId = textInputUserId.editText?.text.toString(),
             origin = textInputSourceAddress.editText?.text.toString(),
-            destination = textInputDestinyAddress.editText?.text.toString()
+            destination = textInputDestinationAddress.editText?.text.toString()
         )
     }
 
     private fun getSavedTextState() = binding.includeFormRequestTrip.run {
         textInputUserId.editText?.setText(viewModel.userIdTextState)
         textInputSourceAddress.editText?.setText(viewModel.sourceAddressTextState)
-        textInputDestinyAddress.editText?.setText(viewModel.destinyAddressTextState)
+        textInputDestinationAddress.editText?.setText(viewModel.destinationAddressTextState)
     }
 }
