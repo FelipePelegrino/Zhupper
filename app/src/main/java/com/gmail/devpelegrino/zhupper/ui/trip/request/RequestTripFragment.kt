@@ -1,12 +1,22 @@
 package com.gmail.devpelegrino.zhupper.ui.trip.request
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.NavHostFragment
 import com.gmail.devpelegrino.zhupper.R
 import com.gmail.devpelegrino.zhupper.databinding.FragmentRequestTripBinding
+import com.gmail.devpelegrino.zhupper.ui.utils.setGoneAnimated
+import com.gmail.devpelegrino.zhupper.ui.utils.setSafeOnClickListener
+import com.gmail.devpelegrino.zhupper.ui.utils.setVisibleAnimated
+import com.gmail.devpelegrino.zhupper.ui.utils.showErrorDialog
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RequestTripFragment : Fragment() {
@@ -16,7 +26,8 @@ class RequestTripFragment : Fragment() {
     private val viewModel: RequestTripViewModel by viewModel()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentRequestTripBinding.inflate(inflater, container, false)
@@ -28,19 +39,98 @@ class RequestTripFragment : Fragment() {
         _binding = null
     }
 
+    override fun onPause() {
+        super.onPause()
+        viewModel.cleanUiState()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setUpListeners()
+        setUpObservers()
+        getSavedTextState()
     }
 
     private fun setUpListeners() = binding.includeFormRequestTrip.run {
-        buttonRequest.setOnClickListener {
-            viewModel.requestRideTest(
-                customerId = textInputUserId.editText?.text.toString(),
-                origin = textInputSourceAddress.editText?.text.toString(),
-                destination = textInputDestinyAddress.editText?.text.toString()
-            )
+        buttonRequest.setSafeOnClickListener {
+            requestRide()
         }
+        textInputUserId.editText?.addTextChangedListener { text ->
+            viewModel.updateUserIdTextState(text.toString())
+        }
+        textInputSourceAddress.editText?.addTextChangedListener { text ->
+            viewModel.updateSourceAddressTextState(text.toString())
+        }
+        textInputDestinyAddress.editText?.addTextChangedListener { text ->
+            viewModel.updateDestinyAddressTextState(text.toString())
+        }
+    }
+
+    private fun setUpObservers() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { uiState ->
+                    when (uiState) {
+                        is RequestTripViewModel.RequestTripUiState.Success -> {
+                            NavHostFragment.findNavController(this@RequestTripFragment)
+                                .navigate(R.id.action_fragment_request_trip_to_fragment_trip_option)
+                        }
+
+                        is RequestTripViewModel.RequestTripUiState.ApiError -> {
+                            showErrorDialog(
+                                fragmentContext = requireContext(),
+                                errorMessage = uiState.errorDescription,
+                                onRetry = { requestRide() }
+                            )
+                        }
+
+                        RequestTripViewModel.RequestTripUiState.Loading -> {
+                            binding.includeLoading.root.setVisibleAnimated()
+                        }
+
+                        RequestTripViewModel.RequestTripUiState.Loaded -> {
+                            binding.includeLoading.root.setGoneAnimated()
+                        }
+
+                        RequestTripViewModel.RequestTripUiState.NetworkError -> {
+                            showErrorDialog(
+                                fragmentContext = requireContext(),
+                                errorMessage = resources.getString(
+                                    R.string.network_error_description
+                                ),
+                                onRetry = { requestRide() }
+                            )
+                        }
+
+                        RequestTripViewModel.RequestTripUiState.UnexpectedError -> {
+                            showErrorDialog(
+                                fragmentContext = requireContext(),
+                                errorMessage = resources.getString(
+                                    R.string.unexpected_error_description
+                                ),
+                                onRetry = { requestRide() }
+                            )
+                        }
+
+                        RequestTripViewModel.RequestTripUiState.Idle -> {}
+                    }
+                }
+            }
+        }
+    }
+
+    private fun requestRide() = binding.includeFormRequestTrip.run {
+        viewModel.requestRideTest(
+            customerId = textInputUserId.editText?.text.toString(),
+            origin = textInputSourceAddress.editText?.text.toString(),
+            destination = textInputDestinyAddress.editText?.text.toString()
+        )
+    }
+
+    private fun getSavedTextState() = binding.includeFormRequestTrip.run {
+        textInputUserId.editText?.setText(viewModel.userIdTextState)
+        textInputSourceAddress.editText?.setText(viewModel.sourceAddressTextState)
+        textInputDestinyAddress.editText?.setText(viewModel.destinyAddressTextState)
     }
 }

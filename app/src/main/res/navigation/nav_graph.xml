@@ -11,17 +11,27 @@
         android:label="@string/request_trip_title"
         tools:layout="@layout/fragment_request_trip">
         <action
-            android:id="@+id/action_fragment_request_trip_to_fragment_trip_options"
-            app:destination="@id/fragment_trip_options" />
+            android:id="@+id/action_fragment_request_trip_to_fragment_trip_option"
+            app:destination="@id/fragment_trip_option"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/fragment_request_trip" />
     </fragment>
     <fragment
-        android:id="@+id/fragment_trip_options"
+        android:id="@+id/fragment_trip_option"
         android:name="com.gmail.devpelegrino.zhupper.ui.trip.option.TripOptionFragment"
         android:label="@string/trip_options_title"
         tools:layout="@layout/fragment_trip_option">
         <action
             android:id="@+id/action_fragment_trip_options_to_fragment_trip_history"
-            app:destination="@id/fragment_trip_history" />
+            app:destination="@id/fragment_trip_history"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/fragment_trip_option" />
     </fragment>
     <fragment
         android:id="@+id/fragment_trip_history"

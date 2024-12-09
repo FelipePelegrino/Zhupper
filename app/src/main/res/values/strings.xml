@@ -4,10 +4,16 @@
     <string name="request_trip_title">Solicitar Viagem</string>
     <string name="trip_options_title">Opções de Viagem</string>
     <string name="trip_history_title">Histórico de Viagem</string>
+    <string name="error_dialog_title">Erro</string>
 
     <string name="user_id_hint">ID do Usuário</string>
     <string name="source_address_hint">Endereço de Origem</string>
     <string name="destiny_address_hint">Endereço de Destino</string>
 
     <string name="request_trip_button">Solicitar Viagem</string>
+    <string name="try_again_button">Tentar Novamente</string>
+    <string name="cancel_button">Cancelar</string>
+
+    <string name="unexpected_error_description">Um erro inesperado ocorreu.</string>
+    <string name="network_error_description">Verifique sua conexão com a internet.</string>
 </resources>
