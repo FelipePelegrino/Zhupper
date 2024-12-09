@@ -8,14 +8,17 @@ import com.gmail.devpelegrino.zhupper.network.RideApi
 import com.gmail.devpelegrino.zhupper.network.model.NetworkError
 import com.gmail.devpelegrino.zhupper.network.model.NetworkRequestEstimateRideBody
 import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import retrofit2.Response
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
 class RideRepositoryImpl(
-    private val rideApi: RideApi,
-    private val gson: Gson
+    private val ioDispatcher: CoroutineDispatcher,
+    private val gson: Gson,
+    private val rideApi: RideApi
 ) : RideRepository {
 
     companion object {
@@ -27,18 +30,20 @@ class RideRepositoryImpl(
         origin: String?,
         destination: String?
     ): RepositoryResult<EstimateRideModel> {
-        return baseApiCall(
-            apiCall = {
-                rideApi.requestEstimateRide(
-                    NetworkRequestEstimateRideBody(
-                        customerId = customerId,
-                        origin = origin,
-                        destination = destination
+        return withContext(ioDispatcher) {
+            baseApiCall(
+                apiCall = {
+                    rideApi.requestEstimateRide(
+                        NetworkRequestEstimateRideBody(
+                            customerId = customerId,
+                            origin = origin,
+                            destination = destination
+                        )
                     )
-                )
-            },
-            transform = { it.toModel() }
-        )
+                },
+                transform = { it.toModel() }
+            )
+        }
     }
 
     @Suppress("TooGenericExceptionCaught")
@@ -73,8 +78,7 @@ class RideRepositoryImpl(
         } catch (e: HttpException) {
             Log.e(TAG, e.toString())
             RepositoryResult.UnexpectedError
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
             Log.e(TAG, e.toString())
             RepositoryResult.UnexpectedError
         }
