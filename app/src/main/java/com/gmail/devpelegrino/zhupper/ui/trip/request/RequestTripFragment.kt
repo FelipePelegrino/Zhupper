@@ -18,7 +18,7 @@ class RequestTripFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentRequestTripBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -34,12 +34,12 @@ class RequestTripFragment : Fragment() {
         setUpListeners()
     }
 
-    private fun setUpListeners() = binding.run {
-        includeFormRequestTrip.buttonRequest.setOnClickListener {
+    private fun setUpListeners() = binding.includeFormRequestTrip.run {
+        buttonRequest.setOnClickListener {
             viewModel.requestRideTest(
-                customerId = includeFormRequestTrip.textInputUserId.editText?.text.toString(),
-                origin = includeFormRequestTrip.textInputSourceAddress.editText?.text.toString(),
-                destination = includeFormRequestTrip.textInputDestinyAddress.editText.toString()
+                customerId = textInputUserId.editText?.text.toString(),
+                origin = textInputSourceAddress.editText?.text.toString(),
+                destination = textInputDestinyAddress.editText?.text.toString()
             )
         }
     }
