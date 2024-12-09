@@ -8,5 +8,7 @@ sealed class RepositoryResult<out T> {
         val errorDescription: String
     ) : RepositoryResult<Nothing>()
 
-    data class UnexpectedError(val message: String) : RepositoryResult<Nothing>()
+    data object NetworkError : RepositoryResult<Nothing>()
+
+    data object UnexpectedError : RepositoryResult<Nothing>()
 }

@@ -9,28 +9,53 @@ import com.gmail.devpelegrino.zhupper.network.model.NetworkError
 import com.gmail.devpelegrino.zhupper.network.model.NetworkRequestEstimateRideBody
 import com.google.gson.Gson
 import retrofit2.HttpException
+import retrofit2.Response
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 class RideRepositoryImpl(
     private val rideApi: RideApi,
     private val gson: Gson
 ) : RideRepository {
 
+    companion object {
+        private const val TAG = "RideRepositoryImpl"
+    }
+
     override suspend fun requestEstimateRide(
         customerId: String?,
         origin: String?,
         destination: String?
     ): RepositoryResult<EstimateRideModel> {
-        return try {
-            val response = rideApi.requestEstimateRide(
-                NetworkRequestEstimateRideBody(
-                    customerId = customerId,
-                    origin = origin,
-                    destination = destination
+        return baseApiCall(
+            apiCall = {
+                rideApi.requestEstimateRide(
+                    NetworkRequestEstimateRideBody(
+                        customerId = customerId,
+                        origin = origin,
+                        destination = destination
+                    )
                 )
-            )
+            },
+            transform = { it.toModel() }
+        )
+    }
+
+    @Suppress("TooGenericExceptionCaught")
+    private suspend fun <T, R> baseApiCall(
+        apiCall: suspend () -> Response<T>,
+        transform: (T) -> R
+    ): RepositoryResult<R> {
+        return try {
+            val response = apiCall()
 
             if (response.isSuccessful) {
-                RepositoryResult.Success(response.body()!!.toModel())
+                val body = response.body()
+                if (body != null) {
+                    RepositoryResult.Success(transform(body))
+                } else {
+                    RepositoryResult.UnexpectedError
+                }
             } else {
                 val errorBody = response.errorBody()?.string()
                 val networkError = gson.fromJson(errorBody, NetworkError::class.java)
@@ -39,12 +64,19 @@ class RideRepositoryImpl(
                     errorDescription = networkError.errorDescription
                 )
             }
+        } catch (e: UnknownHostException) {
+            Log.e(TAG, e.toString())
+            RepositoryResult.NetworkError
+        } catch (e: SocketTimeoutException) {
+            Log.e(TAG, e.toString())
+            RepositoryResult.NetworkError
         } catch (e: HttpException) {
-            Log.e(RideRepositoryImpl::class.java.simpleName, "HttpException: $e")
-            RepositoryResult.UnexpectedError(e.message ?: "Unknown error")
-        } catch (e: Exception) {
-            Log.e(RideRepositoryImpl::class.java.simpleName, "Generic exception: $e")
-            RepositoryResult.UnexpectedError(e.message ?: "Unknown error")
+            Log.e(TAG, e.toString())
+            RepositoryResult.UnexpectedError
+        }
+        catch (e: Exception) {
+            Log.e(TAG, e.toString())
+            RepositoryResult.UnexpectedError
         }
     }
 }
