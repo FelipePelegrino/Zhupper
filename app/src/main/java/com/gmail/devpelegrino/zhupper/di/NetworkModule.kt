@@ -1,5 +1,7 @@
 package com.gmail.devpelegrino.zhupper.di
 
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
@@ -26,10 +28,16 @@ val networkModule = module {
     }
 
     single {
+        GsonBuilder()
+            .setLenient()
+            .create()
+    }
+
+    single {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(get<OkHttpClient>())
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(get<Gson>()))
             .build()
     }
 }
