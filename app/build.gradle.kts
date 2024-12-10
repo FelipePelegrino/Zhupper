@@ -1,8 +1,18 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.detekt)
     id("kotlin-parcelize")
+}
+
+// favor não utilizar exageradamente até eu desativar a key, thank you :D
+val keystorePropertiesFile = rootProject.file("key.properties")
+val keystoreProperties = Properties()
+
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(keystorePropertiesFile.inputStream())
 }
 
 android {
@@ -17,6 +27,11 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField(
+            "String",
+            "API_KEY_MAPS_STATIC",
+            "\"${keystoreProperties["API_KEY_MAPS_STATIC"]}\""
+        )
     }
 
     buildTypes {
@@ -38,6 +53,9 @@ android {
     viewBinding {
         enable = true
     }
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {
@@ -58,6 +76,7 @@ dependencies {
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.converter)
     implementation(libs.retrofit.logging)
+    implementation(libs.bumptech.glide)
 
     testImplementation(libs.junit)
 
