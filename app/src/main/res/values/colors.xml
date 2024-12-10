@@ -16,4 +16,5 @@
     <color name="colorOnError">#FFFFFF</color>
 
     <color name="colorBackgroundLoading">#B3FFFFFF</color>
+    <color name="colorIcon">#424242</color>
 </resources>

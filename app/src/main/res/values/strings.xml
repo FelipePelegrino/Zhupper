@@ -13,10 +13,16 @@
     <string name="request_trip_button">Solicitar Viagem</string>
     <string name="try_again_button">Tentar Novamente</string>
     <string name="exit_button">Sair</string>
+    <string name="choose_button">Escolher</string>
 
     <string name="unexpected_error_description">Um erro inesperado ocorreu.</string>
     <string name="network_error_description">Verifique sua conexão com a internet.</string>
     <string name="empty_data_error_description">Nenhum motorista encontrado para essa rota, verifique os dados de origem e destino e tente novamente.</string>
 
-    <string name="map_view_content_description">Mapa</string>"
+    <string name="map_view_content_description">Mapa</string>
+    <string name="image_drive_name_content_description">Nome do motorista</string>
+    <string name="image_description_content_description">Descrição do motorista</string>
+    <string name="image_vehicle_content_description">Veículo</string>
+    <string name="image_review_note_content_description">Avaliação do motorista</string>
+    <string name="image_price_content_description">Valor da viagem</string>
 </resources>

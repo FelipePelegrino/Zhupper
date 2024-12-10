@@ -4,7 +4,13 @@
 
     <dimen name="large_margin">24dp</dimen>
     <dimen name="medium_margin">16dp</dimen>
+    <dimen name="compact_margin">12dp</dimen>
     <dimen name="small_margin">8dp</dimen>
 
-    <dimen name="map_height">400dp</dimen>
+    <dimen name="small_padding">8dp</dimen>
+
+    <dimen name="stroke_width_default">2dp</dimen>
+
+    <dimen name="min_map_height">200dp</dimen>
+    <dimen name="max_map_height">400dp</dimen>
 </resources>

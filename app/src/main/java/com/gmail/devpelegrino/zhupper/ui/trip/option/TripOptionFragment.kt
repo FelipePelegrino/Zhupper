@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.gmail.devpelegrino.zhupper.BuildConfig
 import com.gmail.devpelegrino.zhupper.R
@@ -26,6 +27,9 @@ class TripOptionFragment : Fragment() {
     private var _binding: FragmentTripOptionBinding? = null
     private val binding get() = _binding!!
     private val viewModel: TripOptionViewModel by viewModels()
+    private val tripOptionArg: TripOptionArg? by lazy {
+        arguments?.getParcelable(TRIP_OPTION_ARG)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,13 +47,28 @@ class TripOptionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val tripOptionArg = arguments?.getParcelable<TripOptionArg>(TRIP_OPTION_ARG)
-        tripOptionArg?.let {
+        setUpView()
+        setObservers()
+    }
+
+    private fun setUpView() {
+        tripOptionArg?.let { tripOption ->
             bindMap(
-                tripOptionArg.sourceLocation,
-                tripOptionArg.destinationLocation
+                tripOption.sourceLocation,
+                tripOption.destinationLocation
             )
+
+            tripOption.options?.let {
+                binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+                binding.recyclerView.adapter = TripOptionAdapter(
+                    tripOption.options
+                )
+            }
         }
+    }
+
+    private fun setObservers() {
+
     }
 
     private fun bindMap(

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/medium_margin"
+    android:layout_marginVertical="@dimen/small_margin"
+    android:background="?attr/selectableItemBackground"
+    app:cardCornerRadius="@dimen/medium_corner_radius"
+    app:strokeColor="@color/colorIcon"
+    app:strokeWidth="@dimen/stroke_width_default">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/medium_margin">
+
+        <ImageView
+            android:id="@+id/image_driver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/image_drive_name_content_description"
+            android:src="@drawable/ic_driver"
+            app:layout_constraintBottom_toBottomOf="@id/text_driver_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/text_driver_name" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_driver_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/small_margin"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:ellipsize="end"
+            android:maxLines="@integer/short_text_field_max_line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/image_driver"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@tools:sample/lorem" />
+
+        <ImageView
+            android:id="@+id/image_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/image_description_content_description"
+            android:src="@drawable/ic_description"
+            app:layout_constraintBottom_toBottomOf="@id/text_description"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/text_description" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/small_margin"
+            android:layout_marginTop="@dimen/compact_margin"
+            android:ellipsize="end"
+            android:maxLines="@integer/long_text_field_max_line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/image_description"
+            app:layout_constraintTop_toBottomOf="@id/text_driver_name"
+            tools:text="@tools:sample/lorem/random" />
+
+        <ImageView
+            android:id="@+id/image_vehicle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/image_vehicle_content_description"
+            android:src="@drawable/ic_vehicle"
+            app:layout_constraintBottom_toBottomOf="@id/text_vehicle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/text_vehicle" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_vehicle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/small_margin"
+            android:layout_marginTop="@dimen/compact_margin"
+            android:ellipsize="end"
+            android:maxLines="@integer/short_text_field_max_line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/image_vehicle"
+            app:layout_constraintTop_toBottomOf="@id/text_description"
+            tools:text="@tools:sample/lorem/random" />
+
+        <ImageView
+            android:id="@+id/image_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/image_review_note_content_description"
+            android:src="@drawable/ic_star"
+            app:layout_constraintBottom_toBottomOf="@id/text_review"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/text_review" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_review"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/small_margin"
+            android:layout_marginTop="@dimen/compact_margin"
+            android:ellipsize="end"
+            android:maxLines="@integer/long_text_field_max_line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/image_review"
+            app:layout_constraintTop_toBottomOf="@id/text_vehicle"
+            tools:text="@tools:sample/lorem" />
+
+        <ImageView
+            android:id="@+id/image_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/image_price_content_description"
+            android:src="@drawable/ic_price"
+            app:layout_constraintBottom_toBottomOf="@id/text_price"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/text_price" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/small_margin"
+            android:layout_marginTop="@dimen/compact_margin"
+            android:ellipsize="end"
+            android:maxLines="@integer/short_text_field_max_line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/image_price"
+            app:layout_constraintTop_toBottomOf="@id/text_review"
+            tools:text="@tools:sample/lorem" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_choose"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:backgroundTint="@color/colorPrimaryVariant"
+            android:text="@string/choose_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_price" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
