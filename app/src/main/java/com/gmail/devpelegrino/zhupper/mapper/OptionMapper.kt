@@ -8,6 +8,6 @@ fun NetworkOption.toModel() = OptionModel(
     name = name,
     description = description,
     vehicle = vehicle,
-    review = networkReview?.toModel(),
+    review = review?.toModel(),
     value = value
 )
