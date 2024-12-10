@@ -12,8 +12,9 @@
 
     <string name="request_trip_button">Solicitar Viagem</string>
     <string name="try_again_button">Tentar Novamente</string>
-    <string name="cancel_button">Cancelar</string>
+    <string name="exit_button">Sair</string>
 
     <string name="unexpected_error_description">Um erro inesperado ocorreu.</string>
     <string name="network_error_description">Verifique sua conexão com a internet.</string>
+    <string name="empty_data_error_description">Nenhum motorista encontrado para essa rota, verifique os dados de origem e destino e tente novamente.</string>
 </resources>

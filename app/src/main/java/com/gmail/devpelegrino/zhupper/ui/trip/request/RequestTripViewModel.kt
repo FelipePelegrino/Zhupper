@@ -65,7 +65,11 @@ class RequestTripViewModel(
 
             when (result) {
                 is RepositoryResult.Success -> {
-                    _uiState.value = RequestTripUiState.Success(estimateRideModel = result.data)
+                    if(result.data.options.isNullOrEmpty()) {
+                        _uiState.value = RequestTripUiState.EmptyDataError
+                    } else {
+                        _uiState.value = RequestTripUiState.Success(estimateRideModel = result.data)
+                    }
                 }
 
                 is RepositoryResult.ApiError -> {
@@ -97,10 +101,11 @@ class RequestTripViewModel(
             val errorDescription: String
         ) : RequestTripUiState()
 
+        data object EmptyDataError : RequestTripUiState()
+        data object NetworkError : RequestTripUiState()
+        data object UnexpectedError : RequestTripUiState()
         data object Loading : RequestTripUiState()
         data object Loaded : RequestTripUiState()
-        data object UnexpectedError : RequestTripUiState()
-        data object NetworkError : RequestTripUiState()
         data object Idle : RequestTripUiState()
     }
 }

@@ -13,7 +13,7 @@ fun showErrorDialog(
         .setTitle(fragmentContext.getString(R.string.error_dialog_title))
         .setMessage(errorMessage)
         .setNeutralButton(
-            fragmentContext.getString(R.string.cancel_button)
+            fragmentContext.getString(R.string.exit_button)
         ) { dialog, _ ->
             dialog.dismiss()
         }

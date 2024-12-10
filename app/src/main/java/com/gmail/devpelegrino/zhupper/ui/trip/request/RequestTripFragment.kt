@@ -75,23 +75,7 @@ class RequestTripFragment : Fragment() {
                 viewModel.uiState.collect { uiState ->
                     when (uiState) {
                         is RequestTripViewModel.RequestTripUiState.Success -> {
-                            val tripOptionArg = TripOptionArg(
-                                userId = viewModel.userIdTextState,
-                                sourceAddress = viewModel.sourceAddressTextState,
-                                destinationAddress = viewModel.destinationAddressTextState,
-                                sourceLocation = uiState.estimateRideModel.origin,
-                                destinationLocation = uiState.estimateRideModel.destination,
-                                options = uiState.estimateRideModel.options
-                            )
-
-                            val bundle = Bundle().apply {
-                                putParcelable(TRIP_OPTION_ARG, tripOptionArg)
-                            }
-
-                            findNavController().navigate(
-                                R.id.action_fragment_request_trip_to_fragment_trip_option,
-                                bundle
-                            )
+                            navigateToTripOptions(uiState)
                         }
 
                         is RequestTripViewModel.RequestTripUiState.ApiError -> {
@@ -102,12 +86,14 @@ class RequestTripFragment : Fragment() {
                             )
                         }
 
-                        RequestTripViewModel.RequestTripUiState.Loading -> {
-                            binding.includeLoading.root.setVisibleAnimated()
-                        }
-
-                        RequestTripViewModel.RequestTripUiState.Loaded -> {
-                            binding.includeLoading.root.setGoneAnimated()
+                        RequestTripViewModel.RequestTripUiState.EmptyDataError -> {
+                            showErrorDialog(
+                                fragmentContext = requireContext(),
+                                errorMessage = resources.getString(
+                                    R.string.empty_data_error_description
+                                ),
+                                onRetry = { requestRide() }
+                            )
                         }
 
                         RequestTripViewModel.RequestTripUiState.NetworkError -> {
@@ -130,11 +116,39 @@ class RequestTripFragment : Fragment() {
                             )
                         }
 
+                        RequestTripViewModel.RequestTripUiState.Loading -> {
+                            binding.includeLoading.root.setVisibleAnimated()
+                        }
+
+                        RequestTripViewModel.RequestTripUiState.Loaded -> {
+                            binding.includeLoading.root.setGoneAnimated()
+                        }
+
                         RequestTripViewModel.RequestTripUiState.Idle -> {}
                     }
                 }
             }
         }
+    }
+
+    private fun navigateToTripOptions(uiState: RequestTripViewModel.RequestTripUiState.Success) {
+        val tripOptionArg = TripOptionArg(
+            userId = viewModel.userIdTextState,
+            sourceAddress = viewModel.sourceAddressTextState,
+            destinationAddress = viewModel.destinationAddressTextState,
+            sourceLocation = uiState.estimateRideModel.origin,
+            destinationLocation = uiState.estimateRideModel.destination,
+            options = uiState.estimateRideModel.options
+        )
+
+        val bundle = Bundle().apply {
+            putParcelable(TRIP_OPTION_ARG, tripOptionArg)
+        }
+
+        findNavController().navigate(
+            R.id.action_fragment_request_trip_to_fragment_trip_option,
+            bundle
+        )
     }
 
     private fun requestRide() = binding.includeFormRequestTrip.run {
