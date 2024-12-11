@@ -1,3 +1,5 @@
+@file:Suppress("LongParameterList")
+
 package com.gmail.devpelegrino.zhupper.repository
 
 import com.gmail.devpelegrino.zhupper.model.EstimateRideModel
@@ -10,4 +12,15 @@ interface RideRepository {
         origin: String?,
         destination: String?
     ): RepositoryResult<EstimateRideModel>
+
+    suspend fun requestConfirmRide(
+        customerId: String?,
+        origin: String?,
+        destination: String?,
+        distance: Number?,
+        duration: String?,
+        driverId: Int,
+        driverName: String,
+        value: Number
+    ): RepositoryResult<Boolean>
 }

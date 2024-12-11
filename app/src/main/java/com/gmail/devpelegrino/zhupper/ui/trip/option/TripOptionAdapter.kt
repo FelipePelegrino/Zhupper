@@ -5,11 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.gmail.devpelegrino.zhupper.databinding.ItemTripOptionBinding
 import com.gmail.devpelegrino.zhupper.model.OptionModel
+import com.gmail.devpelegrino.zhupper.ui.utils.OnClickChooseButton
 import java.text.NumberFormat
 import java.util.Locale
 
 class TripOptionAdapter(
-    private val options: List<OptionModel>
+    private val options: List<OptionModel>,
+    private val onClickChooseButton: OnClickChooseButton
 ) : RecyclerView.Adapter<TripOptionAdapter.TripOptionViewHolder>() {
 
     companion object {
@@ -22,7 +24,10 @@ class TripOptionAdapter(
             parent,
             false
         )
-        return TripOptionViewHolder(binding)
+        return TripOptionViewHolder(
+            binding,
+            onClickChooseButton
+        )
     }
 
     override fun onBindViewHolder(holder: TripOptionViewHolder, position: Int) {
@@ -33,7 +38,8 @@ class TripOptionAdapter(
     override fun getItemCount(): Int = options.size
 
     class TripOptionViewHolder(
-        private val binding: ItemTripOptionBinding
+        private val binding: ItemTripOptionBinding,
+        private val onClickChooseButton: OnClickChooseButton
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(option: OptionModel) = binding.run {
@@ -48,6 +54,10 @@ class TripOptionAdapter(
                 option.review?.rating.toString(),
                 option.review?.comment
             )
+
+            buttonChoose.setOnClickListener {
+                onClickChooseButton(option)
+            }
         }
     }
 }

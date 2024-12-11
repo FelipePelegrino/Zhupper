@@ -4,7 +4,7 @@
 
 ## Geral
 - [ ] Testes unitários
-- [ ] Clean Code / Architecture
+- [ x ] Clean Code / Architecture
 - [ ] Testes instrumentados
 - [ ] Splash
 - [ x ] D.I

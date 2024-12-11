@@ -10,6 +10,8 @@ data class TripOptionArg(
     val userId: String,
     val sourceAddress: String,
     val destinationAddress: String,
+    val distance: Number?,
+    val duration: String?,
     val sourceLocation: LocationModel?,
     val destinationLocation: LocationModel?,
     val options: List<OptionModel>?

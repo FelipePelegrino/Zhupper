@@ -15,11 +15,11 @@ Este documento contém checklists para garantir que os requisitos da aplicação
 
 ## Geral
 - [ x ] Solicitação de Viagem
-- [ ] Opções de Viagem
+- [ x ] Opções de Viagem
 - [ ] Histórico de Viagens
 - [ x ] Debounce
 - [ x ] Loading para cada Request | visual + texto ? 
-- [ x ] Dialog de erro com botão tentar novamente
+- [ x ] Dialog de erro
 
 ---
 
@@ -37,20 +37,20 @@ Este documento contém checklists para garantir que os requisitos da aplicação
 ---
 
 ## Opções de Viagem
-- [ ] Deve mostrar um mapa estático com a rota retornada na estimativa plotada, indicando o ponto A e o ponto B.
-- [ ] A lista de opções apresenta para cada motorista:
-  - [ ] Nome.
-  - [ ] Descrição.
-  - [ ] Veículo.
-  - [ ] Avaliação.
-  - [ ] Valor da viagem.
-- [ ] Para cada motorista há um botão "Escolher".
-  - [ ] Request API | PATCH /ride/confirm
+- [ x ] Deve mostrar um mapa estático com a rota retornada na estimativa plotada, indicando o ponto A e o ponto B.
+- [ x ] A lista de opções apresenta para cada motorista:
+  - [ x ] Nome.
+  - [ x ] Descrição.
+  - [ x ] Veículo.
+  - [ x ] Avaliação.
+  - [ x ] Valor da viagem.
+- [ x ] Para cada motorista há um botão "Escolher".
+  - [ x ] Request API | PATCH /ride/confirm
     - [x] Lembrar dos ids do motorista e o min de km aceito (apenas informativo)
-    - [ ] 200 - exibir tela histórico de viagens
-	- [ ] 400 - invalid data
-	- [ ] 404 - driver not found
-	- [ ] 406 - invalid distance
+    - [ x ] 200 - exibir tela histórico de viagens
+	- [ x ] 400 - invalid data
+	- [ x ] 404 - driver not found
+	- [ x ] 406 - invalid distance
 
 ---
 

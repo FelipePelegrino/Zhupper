@@ -5,10 +5,10 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class OptionModel(
-    val id: Int?,
-    val name: String?,
-    val description: String?,
-    val vehicle: String?,
+    val id: Int,
+    val name: String,
+    val description: String,
+    val vehicle: String,
     val review: ReviewModel?,
-    val value: Number?
+    val value: Number
 ): Parcelable

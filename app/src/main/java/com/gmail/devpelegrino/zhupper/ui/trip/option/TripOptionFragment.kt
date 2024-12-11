@@ -5,13 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.gmail.devpelegrino.zhupper.BuildConfig
 import com.gmail.devpelegrino.zhupper.R
 import com.gmail.devpelegrino.zhupper.databinding.FragmentTripOptionBinding
 import com.gmail.devpelegrino.zhupper.model.LocationModel
+import com.gmail.devpelegrino.zhupper.ui.trip.option.TripOptionViewModel.TripOptionUiState
+import com.gmail.devpelegrino.zhupper.ui.utils.setGoneAnimated
+import com.gmail.devpelegrino.zhupper.ui.utils.setVisibleAnimated
+import com.gmail.devpelegrino.zhupper.ui.utils.showErrorDialog
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TripOptionFragment : Fragment() {
 
@@ -26,7 +35,7 @@ class TripOptionFragment : Fragment() {
 
     private var _binding: FragmentTripOptionBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: TripOptionViewModel by viewModels()
+    private val viewModel: TripOptionViewModel by viewModel()
     private val tripOptionArg: TripOptionArg? by lazy {
         arguments?.getParcelable(TRIP_OPTION_ARG)
     }
@@ -51,6 +60,11 @@ class TripOptionFragment : Fragment() {
         setObservers()
     }
 
+    override fun onPause() {
+        super.onPause()
+        viewModel.cleanUiState()
+    }
+
     private fun setUpView() {
         tripOptionArg?.let { tripOption ->
             bindMap(
@@ -61,14 +75,71 @@ class TripOptionFragment : Fragment() {
             tripOption.options?.let {
                 binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
                 binding.recyclerView.adapter = TripOptionAdapter(
-                    tripOption.options
+                    options = tripOption.options,
+                    onClickChooseButton = { option ->
+                        viewModel.chooseOption(
+                            userId = tripOption.userId,
+                            sourceAddress = tripOption.sourceAddress,
+                            destinationAddress = tripOption.destinationAddress,
+                            distance = tripOption.distance,
+                            duration = tripOption.duration,
+                            option = option
+                        )
+                    }
                 )
             }
         }
     }
 
     private fun setObservers() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { uiState ->
+                    when (uiState) {
+                        is TripOptionUiState.Success -> {
+                            findNavController().navigate(
+                                R.id.action_fragment_trip_options_to_fragment_trip_history
+                            )
+                        }
 
+                        is TripOptionUiState.ApiError -> {
+                            showErrorDialog(
+                                fragmentContext = requireContext(),
+                                errorMessage = uiState.errorDescription
+                            )
+                        }
+
+                        TripOptionUiState.NetworkError -> {
+                            showErrorDialog(
+                                fragmentContext = requireContext(),
+                                errorMessage = resources.getString(
+                                    R.string.network_error_description
+                                )
+                            )
+                        }
+
+                        TripOptionUiState.UnexpectedError -> {
+                            showErrorDialog(
+                                fragmentContext = requireContext(),
+                                errorMessage = resources.getString(
+                                    R.string.unexpected_error_description
+                                )
+                            )
+                        }
+
+                        TripOptionUiState.Loading -> {
+                            binding.includeLoading.root.setVisibleAnimated()
+                        }
+
+                        TripOptionUiState.Loaded -> {
+                            binding.includeLoading.root.setGoneAnimated()
+                        }
+
+                        TripOptionUiState.Idle -> {}
+                    }
+                }
+            }
+        }
     }
 
     private fun bindMap(

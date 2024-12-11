@@ -56,7 +56,11 @@ class RequestTripFragment : Fragment() {
 
     private fun setUpListeners() = binding.includeFormRequestTrip.run {
         buttonRequest.setSafeOnClickListener {
-            requestRide()
+            viewModel.requestRideTest(
+                customerId = textInputUserId.editText?.text.toString(),
+                origin = textInputSourceAddress.editText?.text.toString(),
+                destination = textInputDestinationAddress.editText?.text.toString()
+            )
         }
         textInputUserId.editText?.addTextChangedListener { text ->
             viewModel.updateUserIdTextState(text.toString())
@@ -81,8 +85,7 @@ class RequestTripFragment : Fragment() {
                         is RequestTripViewModel.RequestTripUiState.ApiError -> {
                             showErrorDialog(
                                 fragmentContext = requireContext(),
-                                errorMessage = uiState.errorDescription,
-                                onRetry = { requestRide() }
+                                errorMessage = uiState.errorDescription
                             )
                         }
 
@@ -91,8 +94,7 @@ class RequestTripFragment : Fragment() {
                                 fragmentContext = requireContext(),
                                 errorMessage = resources.getString(
                                     R.string.empty_data_error_description
-                                ),
-                                onRetry = { requestRide() }
+                                )
                             )
                         }
 
@@ -101,8 +103,7 @@ class RequestTripFragment : Fragment() {
                                 fragmentContext = requireContext(),
                                 errorMessage = resources.getString(
                                     R.string.network_error_description
-                                ),
-                                onRetry = { requestRide() }
+                                )
                             )
                         }
 
@@ -111,8 +112,7 @@ class RequestTripFragment : Fragment() {
                                 fragmentContext = requireContext(),
                                 errorMessage = resources.getString(
                                     R.string.unexpected_error_description
-                                ),
-                                onRetry = { requestRide() }
+                                )
                             )
                         }
 
@@ -136,6 +136,8 @@ class RequestTripFragment : Fragment() {
             userId = viewModel.userIdTextState,
             sourceAddress = viewModel.sourceAddressTextState,
             destinationAddress = viewModel.destinationAddressTextState,
+            distance = uiState.estimateRideModel.distance,
+            duration = uiState.estimateRideModel.duration,
             sourceLocation = uiState.estimateRideModel.origin,
             destinationLocation = uiState.estimateRideModel.destination,
             options = uiState.estimateRideModel.options
@@ -148,14 +150,6 @@ class RequestTripFragment : Fragment() {
         findNavController().navigate(
             R.id.action_fragment_request_trip_to_fragment_trip_option,
             bundle
-        )
-    }
-
-    private fun requestRide() = binding.includeFormRequestTrip.run {
-        viewModel.requestRideTest(
-            customerId = textInputUserId.editText?.text.toString(),
-            origin = textInputSourceAddress.editText?.text.toString(),
-            destination = textInputDestinationAddress.editText?.text.toString()
         )
     }
 
