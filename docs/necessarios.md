@@ -14,43 +14,43 @@ Este documento contém checklists para garantir que os requisitos da aplicação
 ---
 
 ## Geral
-- [ x ] Solicitação de Viagem
-- [ x ] Opções de Viagem
+- [x] Solicitação de Viagem
+- [x] Opções de Viagem
 - [ ] Histórico de Viagens
-- [ x ] Debounce
-- [ x ] Loading para cada Request | visual + texto ? 
-- [ x ] Dialog de erro
+- [x] Debounce
+- [x] Loading para cada Request | visual + texto ? 
+- [x] Dialog de erro
 
 ---
 
 ## Solicitação de Viagem
 
-- [ x ] O formulário contém os campos:
-  - [ x ] ID do usuário.
-  - [ x ] Endereço de origem.
-  - [ x ] Endereço de destino.
-- [ x ] Deve ter um botão para estimar o valor da viagem.
-  - [ x ] Request API | POST /ride/estimate
-    - [ x ] 200 - exibir tela opções de viagem
-	- [ x ] 400 - invalid data
+- [x  O formulário contém os campos:
+  - [x] ID do usuário.
+  - [x] Endereço de origem.
+  - [x] Endereço de destino.
+- [x] Deve ter um botão para estimar o valor da viagem.
+  - [x] Request API | POST /ride/estimate
+    - [x] 200 - exibir tela opções de viagem
+	- [x] 400 - invalid data
 
 ---
 
 ## Opções de Viagem
-- [ x ] Deve mostrar um mapa estático com a rota retornada na estimativa plotada, indicando o ponto A e o ponto B.
-- [ x ] A lista de opções apresenta para cada motorista:
-  - [ x ] Nome.
-  - [ x ] Descrição.
-  - [ x ] Veículo.
-  - [ x ] Avaliação.
-  - [ x ] Valor da viagem.
-- [ x ] Para cada motorista há um botão "Escolher".
-  - [ x ] Request API | PATCH /ride/confirm
+- [x] Deve mostrar um mapa estático com a rota retornada na estimativa plotada, indicando o ponto A e o ponto B.
+- [x] A lista de opções apresenta para cada motorista:
+  - [x] Nome.
+  - [x] Descrição.
+  - [x] Veículo.
+  - [x] Avaliação.
+  - [x] Valor da viagem.
+- [x] Para cada motorista há um botão "Escolher".
+  - [x] Request API | PATCH /ride/confirm
     - [x] Lembrar dos ids do motorista e o min de km aceito (apenas informativo)
-    - [ x ] 200 - exibir tela histórico de viagens
-	- [ x ] 400 - invalid data
-	- [ x ] 404 - driver not found
-	- [ x ] 406 - invalid distance
+    - [x] 200 - exibir tela histórico de viagens
+	- [x] 400 - invalid data
+	- [x] 404 - driver not found
+	- [x] 406 - invalid distance
 
 ---
 
