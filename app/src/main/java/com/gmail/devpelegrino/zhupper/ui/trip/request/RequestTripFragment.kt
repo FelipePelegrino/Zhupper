@@ -83,6 +83,16 @@ class RequestTripFragment : Fragment() {
                             navigateToTripOptions(uiState)
                         }
 
+                        RequestTripUiState.CheckInputDataError -> {
+                            showErrorDialog(
+                                fragmentContext = requireContext(),
+                                errorMessage = resources.getString(
+                                    R.string.check_input_data_error_description
+                                )
+                            )
+                            viewModel.cleanUiState()
+                        }
+
                         is RequestTripUiState.ApiError -> {
                             showErrorDialog(
                                 fragmentContext = requireContext(),

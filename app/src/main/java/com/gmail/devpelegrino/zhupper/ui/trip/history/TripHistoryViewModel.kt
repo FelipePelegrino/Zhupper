@@ -22,7 +22,7 @@ class TripHistoryViewModel(
         const val SPINNER_DRIVER_ID_THREE = 3
     }
 
-    private val driverSpinnerData by lazy{
+    private val driverSpinnerData by lazy {
         listOf(
             SPINNER_ALL_DRIVERS,
             SPINNER_DRIVER_ID_ONE,
@@ -47,48 +47,52 @@ class TripHistoryViewModel(
         spinnerPosition: Int
     ) {
         viewModelScope.launch {
-            _uiState.value = TripHistoryUiState.Loading
-            delay(MIN_LOADING_TIME)
-
-            val result = if(spinnerPosition == SPINNER_ALL_DRIVERS) {
-                rideRepository.getRideHistory(
-                    customerId = customerId,
-                    driverId = listOf(
-                        SPINNER_DRIVER_ID_ONE,
-                        SPINNER_DRIVER_ID_TWO,
-                        SPINNER_DRIVER_ID_THREE
-                    )
-                )
+            if (customerId.isNullOrEmpty()) {
+                _uiState.value = TripHistoryUiState.CheckUserIdError
             } else {
-                rideRepository.getRideHistory(
-                    customerId = customerId,
-                    driverId = listOf(spinnerPosition)
-                )
-            }
+                _uiState.value = TripHistoryUiState.Loading
+                delay(MIN_LOADING_TIME)
 
-            _uiState.value = TripHistoryUiState.Loaded
-
-            when (result) {
-                is RepositoryResult.Success -> {
-                    _uiState.value = TripHistoryUiState.Success(
-                        rides = result.data
+                val result = if (spinnerPosition == SPINNER_ALL_DRIVERS) {
+                    rideRepository.getRideHistory(
+                        customerId = customerId,
+                        driverId = listOf(
+                            SPINNER_DRIVER_ID_ONE,
+                            SPINNER_DRIVER_ID_TWO,
+                            SPINNER_DRIVER_ID_THREE
+                        )
+                    )
+                } else {
+                    rideRepository.getRideHistory(
+                        customerId = customerId,
+                        driverId = listOf(spinnerPosition)
                     )
                 }
 
-                is RepositoryResult.ApiError -> {
-                    _uiState.value = TripHistoryUiState.ApiError(
-                        errorCode = result.errorCode,
-                        errorDescription = result.errorDescription
-                    )
+                _uiState.value = TripHistoryUiState.Loaded
 
-                }
+                when (result) {
+                    is RepositoryResult.Success -> {
+                        _uiState.value = TripHistoryUiState.Success(
+                            rides = result.data
+                        )
+                    }
 
-                RepositoryResult.NetworkError -> {
-                    _uiState.value = TripHistoryUiState.NetworkError
-                }
+                    is RepositoryResult.ApiError -> {
+                        _uiState.value = TripHistoryUiState.ApiError(
+                            errorCode = result.errorCode,
+                            errorDescription = result.errorDescription
+                        )
 
-                RepositoryResult.UnexpectedError -> {
-                    _uiState.value = TripHistoryUiState.UnexpectedError
+                    }
+
+                    RepositoryResult.NetworkError -> {
+                        _uiState.value = TripHistoryUiState.NetworkError
+                    }
+
+                    RepositoryResult.UnexpectedError -> {
+                        _uiState.value = TripHistoryUiState.UnexpectedError
+                    }
                 }
             }
         }
@@ -104,6 +108,7 @@ class TripHistoryViewModel(
             val errorDescription: String
         ) : TripHistoryUiState()
 
+        data object CheckUserIdError : TripHistoryUiState()
         data object NetworkError : TripHistoryUiState()
         data object UnexpectedError : TripHistoryUiState()
         data object Loading : TripHistoryUiState()

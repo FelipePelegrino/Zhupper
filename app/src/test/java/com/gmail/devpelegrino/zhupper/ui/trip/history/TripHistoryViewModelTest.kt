@@ -197,4 +197,21 @@ class TripHistoryViewModelTest {
             cancelAndIgnoreRemainingEvents()
         }
     }
+
+    @Test
+    fun `test getRideHistory check user id error error`() = runTest {
+        val customerId = listOf(
+            "",
+            null
+        ).shuffled().first()
+
+        viewModel.uiState.test {
+            viewModel.getRideHistory(customerId, TripHistoryViewModel.SPINNER_DRIVER_ID_ONE)
+
+            assertEquals(TripHistoryViewModel.TripHistoryUiState.Idle, awaitItem())
+            assertEquals(TripHistoryViewModel.TripHistoryUiState.CheckUserIdError, awaitItem())
+
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
 }

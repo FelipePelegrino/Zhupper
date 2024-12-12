@@ -49,40 +49,45 @@ class RequestTripViewModel(
         destination: String?
     ) {
         viewModelScope.launch {
-            _uiState.value = RequestTripUiState.Loading
-            delay(MIN_LOADING_TIME)
+            if (customerId.isNullOrEmpty() || origin.isNullOrEmpty() || destination.isNullOrEmpty()) {
+                _uiState.value = RequestTripUiState.CheckInputDataError
+            } else {
+                _uiState.value = RequestTripUiState.Loading
+                delay(MIN_LOADING_TIME)
 
-            val result = rideRepository.requestEstimateRide(
-                customerId = customerId,
-                origin = origin,
-                destination = destination
-            )
+                val result = rideRepository.requestEstimateRide(
+                    customerId = customerId,
+                    origin = origin,
+                    destination = destination
+                )
 
-            _uiState.value = RequestTripUiState.Loaded
+                _uiState.value = RequestTripUiState.Loaded
 
-            when (result) {
-                is RepositoryResult.Success -> {
-                    if(result.data.options.isNullOrEmpty()) {
-                        _uiState.value = RequestTripUiState.EmptyDataError
-                    } else {
-                        _uiState.value = RequestTripUiState.Success(estimateRideModel = result.data)
+                when (result) {
+                    is RepositoryResult.Success -> {
+                        if (result.data.options.isNullOrEmpty()) {
+                            _uiState.value = RequestTripUiState.EmptyDataError
+                        } else {
+                            _uiState.value =
+                                RequestTripUiState.Success(estimateRideModel = result.data)
+                        }
                     }
-                }
 
-                is RepositoryResult.ApiError -> {
-                    _uiState.value = RequestTripUiState.ApiError(
-                        errorCode = result.errorCode,
-                        errorDescription = result.errorDescription
-                    )
+                    is RepositoryResult.ApiError -> {
+                        _uiState.value = RequestTripUiState.ApiError(
+                            errorCode = result.errorCode,
+                            errorDescription = result.errorDescription
+                        )
 
-                }
+                    }
 
-                RepositoryResult.NetworkError -> {
-                    _uiState.value = RequestTripUiState.NetworkError
-                }
+                    RepositoryResult.NetworkError -> {
+                        _uiState.value = RequestTripUiState.NetworkError
+                    }
 
-                RepositoryResult.UnexpectedError -> {
-                    _uiState.value = RequestTripUiState.UnexpectedError
+                    RepositoryResult.UnexpectedError -> {
+                        _uiState.value = RequestTripUiState.UnexpectedError
+                    }
                 }
             }
         }
@@ -98,6 +103,7 @@ class RequestTripViewModel(
             val errorDescription: String
         ) : RequestTripUiState()
 
+        data object CheckInputDataError : RequestTripUiState()
         data object EmptyDataError : RequestTripUiState()
         data object NetworkError : RequestTripUiState()
         data object UnexpectedError : RequestTripUiState()

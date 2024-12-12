@@ -131,6 +131,35 @@ class RequestTripViewModelTest {
     }
 
     @Test
+    fun `test requestEstimateRide check input data error`() = runTest {
+        val customerId = listOf(
+            "",
+            null
+        ).shuffled().first()
+        val origin = listOf(
+            "",
+            null
+        ).shuffled().first()
+        val destination = listOf(
+            "",
+            null
+        ).shuffled().first()
+
+        viewModel.uiState.test {
+            viewModel.requestEstimateRide(
+                customerId = customerId,
+                origin = origin,
+                destination = destination
+            )
+
+            assertEquals(RequestTripViewModel.RequestTripUiState.Idle, awaitItem())
+            assertEquals(RequestTripViewModel.RequestTripUiState.CheckInputDataError, awaitItem())
+
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
     fun `test requestEstimateRide api error`() = runTest {
         val repositoryApiError = RepositoryResult.ApiError(
             "404",

@@ -131,6 +131,16 @@ class TripHistoryFragment : Fragment() {
                             }
                         }
 
+                        TripHistoryUiState.CheckUserIdError -> {
+                            showErrorDialog(
+                                fragmentContext = requireContext(),
+                                errorMessage = resources.getString(
+                                    R.string.check_user_id_error_description
+                                )
+                            )
+                            viewModel.cleanUiState()
+                        }
+
                         is TripHistoryUiState.ApiError -> {
                             binding.recyclerRides.isVisible = false
                             showErrorDialog(
