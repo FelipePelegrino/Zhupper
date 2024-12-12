@@ -9,20 +9,20 @@ import com.gmail.devpelegrino.zhupper.ui.utils.toCurrencyLocalNumberFormat
 import com.gmail.devpelegrino.zhupper.ui.utils.toFriendlyDate
 import java.text.DecimalFormat
 
-class RideHistoryAdapter : RecyclerView.Adapter<RideHistoryAdapter.RideHistoryViewHolder>() {
+class TripHistoryAdapter : RecyclerView.Adapter<TripHistoryAdapter.TripHistoryViewHolder>() {
 
     private var rides: List<RideModel?> = emptyList()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RideHistoryViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TripHistoryViewHolder {
         val binding = ItemRideHistoryBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
         )
-        return RideHistoryViewHolder(binding)
+        return TripHistoryViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: RideHistoryViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TripHistoryViewHolder, position: Int) {
         val ride = rides[position]
         ride?.let {
             holder.bind(ride)
@@ -36,7 +36,7 @@ class RideHistoryAdapter : RecyclerView.Adapter<RideHistoryAdapter.RideHistoryVi
         notifyDataSetChanged()
     }
 
-    class RideHistoryViewHolder(
+    class TripHistoryViewHolder(
         private val binding: ItemRideHistoryBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 

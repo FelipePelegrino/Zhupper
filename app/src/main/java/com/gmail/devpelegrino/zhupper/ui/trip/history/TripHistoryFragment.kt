@@ -30,7 +30,7 @@ class TripHistoryFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: TripHistoryViewModel by viewModel()
     private var lastSpinnerPosition = 0
-    private lateinit var mAdapter: RideHistoryAdapter
+    private lateinit var mAdapter: TripHistoryAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,7 +61,7 @@ class TripHistoryFragment : Fragment() {
     }
 
     private fun setUpRecyclerView() {
-        mAdapter = RideHistoryAdapter()
+        mAdapter = TripHistoryAdapter()
         binding.recyclerRides.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerRides.adapter = mAdapter
     }
