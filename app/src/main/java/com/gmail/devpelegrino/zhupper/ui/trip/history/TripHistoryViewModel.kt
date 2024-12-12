@@ -50,10 +50,21 @@ class TripHistoryViewModel(
             _uiState.value = TripHistoryUiState.Loading
             delay(MIN_LOADING_TIME)
 
-            val result = rideRepository.getRideHistory(
-                customerId = customerId,
-                driverId = spinnerPosition
-            )
+            val result = if(spinnerPosition == SPINNER_ALL_DRIVERS) {
+                rideRepository.getRideHistory(
+                    customerId = customerId,
+                    driverId = listOf(
+                        SPINNER_DRIVER_ID_ONE,
+                        SPINNER_DRIVER_ID_TWO,
+                        SPINNER_DRIVER_ID_THREE
+                    )
+                )
+            } else {
+                rideRepository.getRideHistory(
+                    customerId = customerId,
+                    driverId = listOf(spinnerPosition)
+                )
+            }
 
             _uiState.value = TripHistoryUiState.Loaded
 

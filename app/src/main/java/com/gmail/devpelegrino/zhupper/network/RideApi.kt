@@ -28,6 +28,6 @@ interface RideApi {
     @GET("ride/{customer_id}")
     suspend fun fetchRideHistory(
         @Path("customer_id") customerId: String?,
-        @Query("driver_id") driverId: Int?
+        @Query("driver_id") driverId: List<Int?>
     ): Response<NetworkResponseRideHistory>
 }

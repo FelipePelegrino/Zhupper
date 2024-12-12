@@ -27,6 +27,6 @@ interface RideRepository {
 
     suspend fun getRideHistory(
         customerId: String?,
-        driverId: Int?
+        driverId: List<Int?>
     ): RepositoryResult<List<RideModel?>>
 }
