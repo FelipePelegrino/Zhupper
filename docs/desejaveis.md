@@ -6,6 +6,6 @@
 - [ ] Testes unitários
 - [x] Clean Code / Architecture
 - [ ] Testes instrumentados
-- [ ] Splash
+- [x] Splash
 - [x] D.I
 - [x] versionCatalog
