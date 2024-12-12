@@ -31,9 +31,13 @@ class TripHistoryAdapter : RecyclerView.Adapter<TripHistoryAdapter.TripHistoryVi
 
     override fun getItemCount(): Int = rides.size
 
-    fun clearAndUpdateNewData(rides: List<RideModel?>) {
+    fun clearAndUpdateNewData(
+        rides: List<RideModel?>,
+        onUpdated: () -> Unit
+    ) {
         this.rides = rides
         notifyDataSetChanged()
+        onUpdated()
     }
 
     class TripHistoryViewHolder(

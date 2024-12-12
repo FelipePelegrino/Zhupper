@@ -119,7 +119,14 @@ class TripHistoryFragment : Fragment() {
                         is TripHistoryUiState.Success -> {
                             if (uiState.rides.isNotEmpty()) {
                                 binding.recyclerRides.isVisible = true
-                                mAdapter.clearAndUpdateNewData(uiState.rides)
+                                mAdapter.clearAndUpdateNewData(
+                                    rides = uiState.rides,
+                                    onUpdated = {
+                                        binding.recyclerRides.post {
+                                            binding.recyclerRides.smoothScrollToPosition(0)
+                                        }
+                                    }
+                                )
                             } else {
                                 showErrorDialog(
                                     fragmentContext = requireContext(),
