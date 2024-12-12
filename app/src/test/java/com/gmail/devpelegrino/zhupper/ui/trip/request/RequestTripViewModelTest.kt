@@ -5,6 +5,7 @@ import com.gmail.devpelegrino.zhupper.model.EstimateRideModelFactory
 import com.gmail.devpelegrino.zhupper.model.RepositoryResult
 import com.gmail.devpelegrino.zhupper.model.RepositoryResultFactory
 import com.gmail.devpelegrino.zhupper.repository.RideRepository
+import com.gmail.devpelegrino.zhupper.utils.MIN_LOADING_TIME
 import com.gmail.devpelegrino.zhupper.utils.RandomDataGenerator
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
@@ -230,9 +231,5 @@ class RequestTripViewModelTest {
 
             cancelAndIgnoreRemainingEvents()
         }
-    }
-
-    companion object {
-        const val MIN_LOADING_TIME = 1000L
     }
 }

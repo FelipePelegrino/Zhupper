@@ -16,8 +16,4 @@ object RandomDataGenerator {
     fun randomDouble(min: Double = 0.0, max: Double = 100.0): Double {
         return Random.nextDouble(min, max)
     }
-
-    fun randomBoolean(): Boolean {
-        return Random.nextBoolean()
-    }
 }

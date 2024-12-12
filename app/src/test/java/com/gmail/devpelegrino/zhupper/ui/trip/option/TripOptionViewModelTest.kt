@@ -4,6 +4,7 @@ import app.cash.turbine.test
 import com.gmail.devpelegrino.zhupper.model.OptionModelFactory
 import com.gmail.devpelegrino.zhupper.model.RepositoryResultFactory
 import com.gmail.devpelegrino.zhupper.repository.RideRepository
+import com.gmail.devpelegrino.zhupper.utils.MIN_LOADING_TIME
 import com.gmail.devpelegrino.zhupper.utils.RandomDataGenerator
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
@@ -219,9 +220,5 @@ class TripOptionViewModelTest {
 
             cancelAndIgnoreRemainingEvents()
         }
-    }
-
-    companion object {
-        const val MIN_LOADING_TIME = 1000L
     }
 }
