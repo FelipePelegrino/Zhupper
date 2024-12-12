@@ -5,6 +5,5 @@ data class EstimateRideModel(
     val destination: LocationModel?,
     val distance: Number?,
     val duration: String?,
-    val options: List<OptionModel>?,
-    val routeResponse: Any?
+    val options: List<OptionModel>?
 )

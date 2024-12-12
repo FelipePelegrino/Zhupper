@@ -8,6 +8,5 @@ fun NetworkResponseEstimateRide.toModel() = EstimateRideModel(
     destination = destination?.toModel(),
     distance = distance,
     duration = duration,
-    options = options?.map { it.toModel() },
-    routeResponse = routeResponse
+    options = options?.map { it.toModel() }
 )

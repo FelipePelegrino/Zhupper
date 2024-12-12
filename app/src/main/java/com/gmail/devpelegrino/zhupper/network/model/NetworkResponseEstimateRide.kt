@@ -5,6 +5,5 @@ data class NetworkResponseEstimateRide(
     val destination: NetworkLocation?,
     val distance: Number?,
     val duration: String?,
-    val options: List<NetworkOption>?,
-    val routeResponse: Any?
+    val options: List<NetworkOption>?
 )
