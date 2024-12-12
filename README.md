@@ -11,5 +11,5 @@ O projeto contém testes unitários com cobertura gerada pelo JaCoCo. Para verif
 1. **Execute os testes unitários**:
    - ./gradlew :app:test
 2. **Execute a task de gerar relatório do jaCoCo**:
-    - ./gradlew jacocoTestReport
+    - ./gradlew :app:jacocoTestReport
 3. No diretório **app\build\jacocoHtml** ira ter o arquivo **index.html** mostrando a cobertura de testes do projeto
