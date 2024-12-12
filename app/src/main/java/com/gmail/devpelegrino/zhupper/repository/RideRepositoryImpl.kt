@@ -1,6 +1,5 @@
 package com.gmail.devpelegrino.zhupper.repository
 
-import android.util.Log
 import com.gmail.devpelegrino.zhupper.mapper.toModel
 import com.gmail.devpelegrino.zhupper.model.EstimateRideModel
 import com.gmail.devpelegrino.zhupper.model.RepositoryResult
@@ -23,10 +22,6 @@ class RideRepositoryImpl(
     private val gson: Gson,
     private val rideApi: RideApi
 ) : RideRepository {
-
-    companion object {
-        private const val TAG = "RideRepositoryImpl"
-    }
 
     override suspend fun requestEstimateRide(
         customerId: String?,
@@ -101,7 +96,7 @@ class RideRepositoryImpl(
         }
     }
 
-    @Suppress("TooGenericExceptionCaught")
+    @Suppress("TooGenericExceptionCaught", "UnknownHostException")
     private suspend fun <T, R> baseApiCall(
         apiCall: suspend () -> Response<T>,
         transform: (T) -> R
@@ -125,16 +120,12 @@ class RideRepositoryImpl(
                 )
             }
         } catch (e: UnknownHostException) {
-            Log.e(TAG, e.toString())
             RepositoryResult.NetworkError
         } catch (e: SocketTimeoutException) {
-            Log.e(TAG, e.toString())
             RepositoryResult.NetworkError
         } catch (e: HttpException) {
-            Log.e(TAG, e.toString())
             RepositoryResult.UnexpectedError
         } catch (e: Exception) {
-            Log.e(TAG, e.toString())
             RepositoryResult.UnexpectedError
         }
     }

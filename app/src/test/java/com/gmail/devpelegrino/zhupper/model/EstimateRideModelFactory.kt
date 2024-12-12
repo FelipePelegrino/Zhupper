@@ -12,8 +12,7 @@ object EstimateRideModelFactory {
             duration = RandomDataGenerator.randomString(10),
             options = List(RandomDataGenerator.randomInt(1, 5)) {
                 OptionModelFactory.createFull()
-            },
-            routeResponse = RandomDataGenerator.randomString()
+            }
         )
     }
 
@@ -24,7 +23,6 @@ object EstimateRideModelFactory {
             distance = RandomDataGenerator.randomDouble(),
             duration = RandomDataGenerator.randomString(10),
             options = emptyList(),
-            routeResponse = RandomDataGenerator.randomString()
         )
     }
 }
