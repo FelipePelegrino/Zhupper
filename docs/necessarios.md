@@ -16,16 +16,16 @@ Este documento contém checklists para garantir que os requisitos da aplicação
 ## Geral
 - [x] Solicitação de Viagem
 - [x] Opções de Viagem
-- [ ] Histórico de Viagens
+- [x] Histórico de Viagens
 - [x] Debounce
-- [x] Loading para cada Request | visual + texto ? 
+- [x] Loading para cada Request
 - [x] Dialog de erro
 
 ---
 
 ## Solicitação de Viagem
 
-- [x  O formulário contém os campos:
+- [x]  O formulário contém os campos:
   - [x] ID do usuário.
   - [x] Endereço de origem.
   - [x] Endereço de destino.
@@ -56,20 +56,20 @@ Este documento contém checklists para garantir que os requisitos da aplicação
 
 ## Histórico de Viagens
 
-- [ ] Fitros
-  - [ ] Existe um campo para informar o ID do usuário.
-  - [ ] Há um seletor de motorista com uma opção para "Mostrar todos".
-- [ ] Há um botão para aplicar o filtro.
-  - [ ] Request API | GET /ride/{customer_id}?driver_id={id do motorista}
-    - [ ] 200 - lista de cada viagem
-	  - [ ] Data e hora da viagem.
-	  - [ ] Nome do motorista.
-	  - [ ] Origem.
-	  - [ ] Destino.
-	  - [ ] Distância.
-	  - [ ] Tempo.
-	  - [ ] Valor.
-	- [ ] 400 - invalid driver
-	- [ ] 404 - no rides found
+- [x] Fitros
+  - [x] Existe um campo para informar o ID do usuário.
+  - [x] Há um seletor de motorista com uma opção para "Mostrar todos".
+- [x] Há um botão para aplicar o filtro.
+  - [x] Request API | GET /ride/{customer_id}?driver_id={id do motorista}
+    - [x] 200 - lista de cada viagem
+	  - [x] Data e hora da viagem.
+	  - [x] Nome do motorista.
+	  - [x] Origem.
+	  - [x] Destino.
+	  - [x] Distância.
+	  - [x] Tempo.
+	  - [x] Valor.
+	- [x] 400 - invalid driver
+	- [x] 404 - no rides found
 
 ---

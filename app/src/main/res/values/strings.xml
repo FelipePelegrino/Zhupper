@@ -30,7 +30,7 @@
     <string name="image_distance_content_description">Distancia da viagem</string>
     <string name="image_calendar_content_description">Data e hora da viagem</string>
 
-    <string name="spinner_all_drivers">Todos</string>
+    <string name="spinner_all_drivers">Mostrar todos</string>
     <string name="spinner_mock_driver_one">Homer Simpson</string>
     <string name="spinner_mock_driver_two">Dominic Toretto</string>
     <string name="spinner_mock_driver_three">James Bond</string>
