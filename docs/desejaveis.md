@@ -3,7 +3,7 @@
 ---
 
 ## Geral
-- [ ] Testes unitários
+- [x] Testes unitários
 - [x] Clean Code / Architecture
 - [ ] Testes instrumentados
 - [x] Splash
