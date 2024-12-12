@@ -121,7 +121,12 @@ class TripHistoryFragment : Fragment() {
                                 binding.recyclerRides.isVisible = true
                                 mAdapter.clearAndUpdateNewData(uiState.rides)
                             } else {
-                                //TODO: aqui
+                                showErrorDialog(
+                                    fragmentContext = requireContext(),
+                                    errorMessage = resources.getString(
+                                        R.string.empty_data_trip_history_error_description
+                                    )
+                                )
                                 binding.recyclerRides.isVisible = false
                             }
                         }

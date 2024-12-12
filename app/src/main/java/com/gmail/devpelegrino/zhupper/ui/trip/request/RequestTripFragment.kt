@@ -94,7 +94,7 @@ class RequestTripFragment : Fragment() {
                             showErrorDialog(
                                 fragmentContext = requireContext(),
                                 errorMessage = resources.getString(
-                                    R.string.empty_data_error_description
+                                    R.string.empty_data_request_trip_error_description
                                 )
                             )
                         }

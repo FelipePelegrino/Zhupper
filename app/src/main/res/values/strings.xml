@@ -18,7 +18,8 @@
 
     <string name="unexpected_error_description">Um erro inesperado ocorreu.</string>
     <string name="network_error_description">Verifique sua conexão com a internet.</string>
-    <string name="empty_data_error_description">Nenhum motorista encontrado para essa rota, verifique os dados de origem e destino.</string>
+    <string name="empty_data_request_trip_error_description">Nenhum motorista encontrado para essa rota, verifique os dados de origem e destino.</string>
+    <string name="empty_data_trip_history_error_description">Não foi encontrado histórico de viagem, verifique os dados e tente novamente.</string>
 
     <string name="map_view_content_description">Mapa</string>
     <string name="image_drive_name_content_description">Nome do motorista</string>
