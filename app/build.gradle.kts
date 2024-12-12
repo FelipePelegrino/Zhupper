@@ -5,9 +5,9 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.detekt)
     id("kotlin-parcelize")
+    jacoco
 }
 
-// favor não utilizar exageradamente até eu desativar a key, thank you :D
 val keystorePropertiesFile = rootProject.file("key.properties")
 val keystoreProperties = Properties()
 
@@ -56,6 +56,44 @@ android {
     buildFeatures {
         buildConfig = true
     }
+}
+
+jacoco {
+    toolVersion = "0.8.12"
+}
+
+tasks.register<JacocoReport>("jacocoTestReport") {
+    dependsOn("testDebugUnitTest")
+
+    group = "Verification"
+    description = "Generate Jacoco coverage reports after running tests."
+
+    reports {
+        html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
+    }
+
+    val fileFilter = listOf(
+        "**/R.class",
+        "**/R$*.class",
+        "**/BuildConfig.*",
+        "**/Manifest*.*",
+        "**/databinding/**",
+        "**/android/databinding/**",
+        "**/androidx/**",
+        "**/sun/security/**",
+        "**/generated/**"
+    )
+
+    val debugTree = fileTree("${buildDir}/tmp/kotlin-classes/debug") {
+        exclude(fileFilter)
+    }
+    classDirectories.setFrom(files(debugTree))
+
+    sourceDirectories.setFrom(files("src/main/java", "src/main/kotlin"))
+
+    executionData.setFrom(fileTree("${buildDir}") {
+        include("**/jacoco/testDebugUnitTest.exec")
+    })
 }
 
 dependencies {
