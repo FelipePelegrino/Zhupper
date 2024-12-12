@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.gmail.devpelegrino.zhupper.model.EstimateRideModel
 import com.gmail.devpelegrino.zhupper.model.RepositoryResult
 import com.gmail.devpelegrino.zhupper.repository.RideRepository
+import com.gmail.devpelegrino.zhupper.ui.utils.MIN_LOADING_TIME
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,10 +14,6 @@ import kotlinx.coroutines.launch
 class RequestTripViewModel(
     private val rideRepository: RideRepository
 ) : ViewModel() {
-
-    companion object {
-        private const val MIN_LOADING_TIME = 750L
-    }
 
     private var _userIdTextState: String = ""
     val userIdTextState: String get() = _userIdTextState
@@ -46,7 +43,7 @@ class RequestTripViewModel(
         _destinationAddressTextState = text
     }
 
-    fun requestRideTest(
+    fun requestEstimateRide(
         customerId: String?,
         origin: String?,
         destination: String?

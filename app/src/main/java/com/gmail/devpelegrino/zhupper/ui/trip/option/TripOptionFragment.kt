@@ -73,8 +73,8 @@ class TripOptionFragment : Fragment() {
             )
 
             tripOption.options?.let {
-                binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-                binding.recyclerView.adapter = TripOptionAdapter(
+                binding.recyclerOptions.layoutManager = LinearLayoutManager(requireContext())
+                binding.recyclerOptions.adapter = TripOptionAdapter(
                     options = tripOption.options,
                     onClickChooseButton = { option ->
                         viewModel.chooseOption(

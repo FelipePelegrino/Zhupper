@@ -1,6 +1,6 @@
 package com.gmail.devpelegrino.zhupper.network.model
 
 data class NetworkDriver(
-    val id: Number,
+    val id: Int,
     val name: String
 )

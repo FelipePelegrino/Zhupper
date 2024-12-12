@@ -4,6 +4,7 @@ import android.util.Log
 import com.gmail.devpelegrino.zhupper.mapper.toModel
 import com.gmail.devpelegrino.zhupper.model.EstimateRideModel
 import com.gmail.devpelegrino.zhupper.model.RepositoryResult
+import com.gmail.devpelegrino.zhupper.model.RideModel
 import com.gmail.devpelegrino.zhupper.network.RideApi
 import com.gmail.devpelegrino.zhupper.network.model.NetworkDriver
 import com.gmail.devpelegrino.zhupper.network.model.NetworkError
@@ -77,6 +78,25 @@ class RideRepositoryImpl(
                     )
                 },
                 transform = { it.success }
+            )
+        }
+    }
+
+    override suspend fun getRideHistory(
+        customerId: String?,
+        driverId: Int?
+    ): RepositoryResult<List<RideModel?>> {
+        return withContext(ioDispatcher) {
+            baseApiCall(
+                apiCall = {
+                    rideApi.fetchRideHistory(
+                        customerId = customerId ?: "",
+                        driverId = driverId
+                    )
+                },
+                transform = { response ->
+                    response.rides.map { it?.toModel() }
+                }
             )
         }
     }

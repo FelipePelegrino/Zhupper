@@ -6,8 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gmail.devpelegrino.zhupper.databinding.ItemTripOptionBinding
 import com.gmail.devpelegrino.zhupper.model.OptionModel
 import com.gmail.devpelegrino.zhupper.ui.utils.OnClickChooseButton
-import java.text.NumberFormat
-import java.util.Locale
+import com.gmail.devpelegrino.zhupper.ui.utils.toCurrencyLocalNumberFormat
 
 class TripOptionAdapter(
     private val options: List<OptionModel>,
@@ -43,12 +42,10 @@ class TripOptionAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(option: OptionModel) = binding.run {
-            val currencyFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
-
             textDriverName.text = option.name
             textDescription.text = option.description
             textVehicle.text = option.vehicle
-            textPrice.text = currencyFormat.format(option.value)
+            textPrice.text = option.value.toCurrencyLocalNumberFormat()
             textReview.text = String.format(
                 TEMPLATE_REVIEW_TEXT,
                 option.review?.rating.toString(),

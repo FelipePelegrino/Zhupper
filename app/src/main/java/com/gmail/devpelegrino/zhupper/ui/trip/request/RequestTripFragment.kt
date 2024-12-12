@@ -14,6 +14,7 @@ import com.gmail.devpelegrino.zhupper.R
 import com.gmail.devpelegrino.zhupper.databinding.FragmentRequestTripBinding
 import com.gmail.devpelegrino.zhupper.ui.trip.option.TripOptionArg
 import com.gmail.devpelegrino.zhupper.ui.trip.option.TripOptionFragment.Companion.TRIP_OPTION_ARG
+import com.gmail.devpelegrino.zhupper.ui.trip.request.RequestTripViewModel.RequestTripUiState
 import com.gmail.devpelegrino.zhupper.ui.utils.setGoneAnimated
 import com.gmail.devpelegrino.zhupper.ui.utils.setSafeOnClickListener
 import com.gmail.devpelegrino.zhupper.ui.utils.setVisibleAnimated
@@ -56,7 +57,7 @@ class RequestTripFragment : Fragment() {
 
     private fun setUpListeners() = binding.includeFormRequestTrip.run {
         buttonRequest.setSafeOnClickListener {
-            viewModel.requestRideTest(
+            viewModel.requestEstimateRide(
                 customerId = textInputUserId.editText?.text.toString(),
                 origin = textInputSourceAddress.editText?.text.toString(),
                 destination = textInputDestinationAddress.editText?.text.toString()
@@ -78,18 +79,18 @@ class RequestTripFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
                     when (uiState) {
-                        is RequestTripViewModel.RequestTripUiState.Success -> {
+                        is RequestTripUiState.Success -> {
                             navigateToTripOptions(uiState)
                         }
 
-                        is RequestTripViewModel.RequestTripUiState.ApiError -> {
+                        is RequestTripUiState.ApiError -> {
                             showErrorDialog(
                                 fragmentContext = requireContext(),
                                 errorMessage = uiState.errorDescription
                             )
                         }
 
-                        RequestTripViewModel.RequestTripUiState.EmptyDataError -> {
+                        RequestTripUiState.EmptyDataError -> {
                             showErrorDialog(
                                 fragmentContext = requireContext(),
                                 errorMessage = resources.getString(
@@ -98,7 +99,7 @@ class RequestTripFragment : Fragment() {
                             )
                         }
 
-                        RequestTripViewModel.RequestTripUiState.NetworkError -> {
+                        RequestTripUiState.NetworkError -> {
                             showErrorDialog(
                                 fragmentContext = requireContext(),
                                 errorMessage = resources.getString(
@@ -107,7 +108,7 @@ class RequestTripFragment : Fragment() {
                             )
                         }
 
-                        RequestTripViewModel.RequestTripUiState.UnexpectedError -> {
+                        RequestTripUiState.UnexpectedError -> {
                             showErrorDialog(
                                 fragmentContext = requireContext(),
                                 errorMessage = resources.getString(
@@ -116,22 +117,22 @@ class RequestTripFragment : Fragment() {
                             )
                         }
 
-                        RequestTripViewModel.RequestTripUiState.Loading -> {
+                        RequestTripUiState.Loading -> {
                             binding.includeLoading.root.setVisibleAnimated()
                         }
 
-                        RequestTripViewModel.RequestTripUiState.Loaded -> {
+                        RequestTripUiState.Loaded -> {
                             binding.includeLoading.root.setGoneAnimated()
                         }
 
-                        RequestTripViewModel.RequestTripUiState.Idle -> {}
+                        RequestTripUiState.Idle -> {}
                     }
                 }
             }
         }
     }
 
-    private fun navigateToTripOptions(uiState: RequestTripViewModel.RequestTripUiState.Success) {
+    private fun navigateToTripOptions(uiState: RequestTripUiState.Success) {
         val tripOptionArg = TripOptionArg(
             userId = viewModel.userIdTextState,
             sourceAddress = viewModel.sourceAddressTextState,
