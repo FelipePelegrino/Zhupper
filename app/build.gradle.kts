@@ -79,6 +79,9 @@ dependencies {
     implementation(libs.bumptech.glide)
 
     testImplementation(libs.junit)
+    testImplementation(libs.kotlin.coroutine.test)
+    testImplementation(libs.mockito)
+    testImplementation(libs.turbine)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
